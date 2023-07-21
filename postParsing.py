@@ -15,21 +15,19 @@ token  = soup.find("form").find("input").get("value")
 
 data = {"csrf_token":token,"username":"andrew","password":"123andrew"}
 result = work.post("https://quotes.toscrape.com/login", headers=headers, data=data, allow_redirects=True)
+def array_ite():
+    for count in range(1, 11):
+        url = f"https://quotes.toscrape.com/page/{count}"
+        response = work.get(url, headers=headers)
+        soup = BeautifulSoup(response.text, "lxml")
+        data = soup.find_all("div", class_="quote")
 
-for count in range(1, 8):
-    url = f"https://quotes.toscrape.com/page/{count}"
-    response = work.get(url, headers=headers)
-    soup = BeautifulSoup(response.text, "lxml")
-
-    # text = soup.find_all("span", class_="text")
-    # author = soup.find_all("small", class_="author")
-
-    soup
-
-# def array_items():
-    
-        # if len(text) != 0:
-        #     yield text, author
-        # else:
-        #     break
+        for i in data:   
+            if len(data) != 0:
+                res_text = i.find("span", class_="text").text
+                res_author = i.find("small", class_="author").text
+                print(res_text + "\n" + res_author + "\n\n")
+                yield res_text, res_author,
+            else:
+                break
     # print(text + "\n" + author + "\n\n")

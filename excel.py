@@ -1,5 +1,6 @@
 import xlsxwriter
 from main import array_items
+from postParsing import array_ite
 
 # Create an new Excel file and add a worksheet.
 workbook = xlsxwriter.Workbook("parsing.xlsx")
@@ -24,5 +25,25 @@ def writer(parametr):
         row += 1
         
 writer(array_items)
+
+workbook.close()
+
+workbook = xlsxwriter.Workbook("postParse.xlsx")
+worksheet = workbook.add_worksheet("цитаты")
+
+def writer(parametr):
+
+    row = 0
+    column = 0
+
+    worksheet.set_column("A:A",150)
+    worksheet.set_column("B:B",50)
+
+    for item in parametr():
+        worksheet.write(row,column, item[0])
+        worksheet.write(row,column+1, item[1])
+        row += 1
+        
+writer(array_ite)
 
 workbook.close()
